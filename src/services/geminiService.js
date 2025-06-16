@@ -1,4 +1,5 @@
 import { logger } from '../utils/logger.js';
+import { getConversation, saveMessage } from '../utils/conversationManager.js';
 
 // API endpoint and model configuration
 const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/';
@@ -7,13 +8,15 @@ const MODEL = 'gemini-2.0-flash';
 /**
  * Generates a reply using the Google Gemini REST API based on the provided user text.
  * @param {string} text - The input text from the user to generate a response for.
+ * @param {string} callSid - The Twilio Call SID for conversation tracking.
  * @returns {Promise<string>} - The generated reply or a fallback message if an error occurs.
  */
-export async function generateReply(text) {
+export async function generateReply(text, callSid) {
   logger.info('Starting reply generation', {
     inputText: text,
     model: MODEL,
     apiKeySet: !!process.env.GEMINI_API_KEY,
+    callSid
   });
 
   // Check if API key is set
@@ -23,13 +26,23 @@ export async function generateReply(text) {
   }
 
   try {
+    // Save user message to conversation history
+    saveMessage(callSid, 'user', text);
+
+    // Get conversation history
+    const conversationHistory = getConversation(callSid);
+    
+    // Format the conversation history into a single context string
+    const context = conversationHistory
+      .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
+      .join('\n');
+
     // Prepare the content payload for the REST API
     const content = {
       contents: [{
-        role: 'user',
         parts: [{
-          text: `You are a helpful and polite AI assistant. \n${text}`,
-        }],
+          text: `You are a helpful and polite AI assistant. Here is our conversation history:\n${context}\n\nUser: ${text}`
+        }]
       }],
       safetySettings: [
         {
@@ -78,6 +91,10 @@ export async function generateReply(text) {
     // Parse the response
     const result = await response.json();
     const reply = result.candidates[0].content.parts[0].text;
+    
+    // Save assistant's reply to conversation history
+    saveMessage(callSid, 'assistant', reply);
+
     logger.info('Successfully generated reply from Gemini API', {
       reply,
       responseLength: reply.length,
@@ -94,7 +111,7 @@ export async function generateReply(text) {
 
     // Handle specific API key errors
     if (err.message.includes('API_KEY_INVALID') || err.message.includes('400')) {
-      return 'Sorry, there’s an issue with the AI service configuration. Please try again later.';
+      return "Sorry, there's an issue with the AI service configuration. Please try again later.";
     }
     return 'Sorry, could you please repeat that?';
   }

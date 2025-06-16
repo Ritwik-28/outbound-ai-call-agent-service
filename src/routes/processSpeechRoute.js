@@ -35,14 +35,20 @@ export default async function processSpeechRoute(fastify, options) {
     try {
       // Get the speech input from the request
       const speech = request.body.SpeechResult || '';
-      logger.debug('Processing speech input', { speech });
+      const callSid = request.body.CallSid;
+      logger.debug('Processing speech input', { speech, callSid });
 
       if (!speech) {
         // Handle case where no speech input is received
         logger.warn('No speech input received');
         const twiml = new VoiceResponse();
-        twiml.say('Sorry, I didn’t hear anything. Please try again.');
-        twiml.redirect('/start');
+        twiml.say("Sorry, I didn't hear anything. Please try again.");
+        twiml.gather({
+          input: 'speech',
+          action: '/process-speech',
+          method: 'POST',
+          timeout: 5,
+        });
         logger.info('Generated fallback TwiML response', { twiml: twiml.toString() });
         reply.type('text/xml');
         reply.send(twiml.toString());
@@ -51,7 +57,7 @@ export default async function processSpeechRoute(fastify, options) {
 
       // Generate an AI response using the Gemini service
       logger.info('Generating AI reply for speech input');
-      const textReply = await generateReply(speech);
+      const textReply = await generateReply(speech, callSid);
       logger.debug('Received AI reply', { textReply, replyLength: textReply.length });
 
       // Convert the AI response to speech using Deepgram
@@ -66,13 +72,21 @@ export default async function processSpeechRoute(fastify, options) {
       fs.writeFileSync(filePath, audioBuffer);
       logger.info('Audio file saved successfully', { filename });
 
-      // Create TwiML response to play the audio and redirect to /start
+      // Create TwiML response to play the audio and gather next input
       logger.debug('Creating new VoiceResponse object');
       const twiml = new VoiceResponse();
       const audioUrl = `${process.env.SERVER_HOST}/audio/${filename}`;
       logger.debug('Configuring TwiML to play audio', { audioUrl });
       twiml.play(audioUrl);
-      twiml.redirect('/start');
+      
+      // Add gather for next input instead of redirecting
+      twiml.gather({
+        input: 'speech',
+        action: '/process-speech',
+        method: 'POST',
+        timeout: 5,
+      });
+
       logger.info('Generated TwiML response', { twiml: twiml.toString() });
 
       // Set response content type to XML and send the TwiML
@@ -89,8 +103,13 @@ export default async function processSpeechRoute(fastify, options) {
 
       // Fallback TwiML response in case of error
       const twiml = new VoiceResponse();
-      twiml.say('Sorry, an error occurred. Please try again later.');
-      twiml.redirect('/start');
+      twiml.say('Sorry, an error occurred. Please try again.');
+      twiml.gather({
+        input: 'speech',
+        action: '/process-speech',
+        method: 'POST',
+        timeout: 5,
+      });
       logger.info('Generated fallback TwiML response', { twiml: twiml.toString() });
       reply.type('text/xml');
       reply.send(twiml.toString());

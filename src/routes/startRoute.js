@@ -34,18 +34,17 @@ export default async function startRoute(fastify, options) {
       logger.debug('Creating new VoiceResponse object');
       const twiml = new VoiceResponse();
 
+      // Add initial greeting
+      twiml.say('Hello! How can I help you today?');
+
       // Configure a Gather verb to collect speech input from the user
       logger.debug('Configuring Gather verb for speech input');
-      const gather = twiml.gather({
+      twiml.gather({
         input: 'speech', // Collect speech input
         action: '/process-speech', // Endpoint to handle the gathered speech
         method: 'POST', // Use POST method for the action
         timeout: 5, // Wait 5 seconds for user input
       });
-
-      // Add a prompt to the user
-      logger.debug('Adding Say verb to TwiML');
-      gather.say('Hello! How can I help you today?');
 
       // Log the generated TwiML for debugging
       logger.info('Generated TwiML response', {
