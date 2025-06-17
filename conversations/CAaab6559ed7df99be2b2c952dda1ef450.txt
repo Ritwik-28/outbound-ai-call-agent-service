@@ -1,0 +1,27 @@
+[
+  {
+    "role": "assistant",
+    "content": "Hey, hi there! Awesome to connect! I'm Ritwik from Crio Dot Do, here to chat about your next steps in tech. I'd love to hear about your goals and see how our hands-on programs can fit in. We've got a free-trial workshop today that could be a cool way to kick things off. What caught your eye about Crio?",
+    "timestamp": "2025-06-17T08:44:00.723Z"
+  },
+  {
+    "role": "user",
+    "content": "and if exploding,",
+    "timestamp": "2025-06-17T08:44:25.677Z"
+  },
+  {
+    "role": "assistant",
+    "content": "I hear you. What exactly were you hoping to get out of Crio?\n",
+    "timestamp": "2025-06-17T08:44:25.677Z"
+  },
+  {
+    "role": "user",
+    "content": "A man that I'm looking good feeling today time.",
+    "timestamp": "2025-06-17T08:44:39.087Z"
+  },
+  {
+    "role": "assistant",
+    "content": "I understand your concern. Let me provide more information or address your question.",
+    "timestamp": "2025-06-17T08:44:39.088Z"
+  }
+]
