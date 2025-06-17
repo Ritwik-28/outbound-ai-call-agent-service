@@ -10,7 +10,6 @@ dotenv.config();                              // Load environment variables from
  */
 function initializeDeepgramClient() {
   const apiKey = process.env.DEEPGRAM_API_KEY;
-  console.log('Deepgram API Key:', apiKey); // Debugging line to check API key presence
 
   if (!apiKey) {
     logger.error('Deepgram API key is not set in environment variables', {

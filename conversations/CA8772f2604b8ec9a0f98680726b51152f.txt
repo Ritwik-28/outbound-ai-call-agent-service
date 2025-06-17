@@ -1,0 +1,37 @@
+[
+  {
+    "role": "assistant",
+    "content": "Hey, hi there! Awesome to connect! I'm Ritwik from Crio Dot Do, here to chat about your next steps in tech. I'd love to hear about your goals and see how our hands-on programs can fit in. We've got a free-trial workshop today that could be a cool way to kick things off. What caught your eye about Crio?",
+    "timestamp": "2025-06-17T08:20:38.968Z"
+  },
+  {
+    "role": "user",
+    "content": "Scientific inquiry.",
+    "timestamp": "2025-06-17T08:21:04.969Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Hey, hi there! Am I speaking with Scientific inquiry?\n\nAwesome to connect! I'm Ritwik from Crio Dot Do, here to chat about your next steps in tech.\n\nI saw you checked us out recently - what caught your eye about Crio? I'm here to chat about your next steps in tech and how Crio can help.\n\nI'd love to hear about your goals and see how our hands-on programs can fit in. We've got a free-trial workshop today that could be a cool way to kick things off. It's {Day}, so the workshop's tonight at **8:30 PM**, with an Ask-Me-Anything after.\n\nSo, scientific inquiry, what sparked your interest in that?\n",
+    "timestamp": "2025-06-17T08:21:04.970Z"
+  },
+  {
+    "role": "user",
+    "content": "Exploring.",
+    "timestamp": "2025-06-17T08:21:52.347Z"
+  },
+  {
+    "role": "assistant",
+    "content": "I hear you. Exploring, got it! So, are you looking to explore a new career path, new skills, or something else entirely?\n\nTo give you the best advice, could you tell me a bit about what you do now and what you're hoping to achieve by exploring new things? This will help me understand how Crio's programs can be a good fit.\n\nBy the way, since it's {Day}, our free workshop is tonight at 8:30 PM. It's a great way to explore our learning style and see if it clicks with you. Are you interested in checking it out?\n",
+    "timestamp": "2025-06-17T08:21:52.348Z"
+  },
+  {
+    "role": "user",
+    "content": "I'm currently working as a product manager, but I would like to understand a bit about",
+    "timestamp": "2025-06-17T08:22:35.742Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Hey, hi there! Am I speaking with Scientific inquiry?\n\nAwesome to connect! I'm Ritwik from Crio Dot Do, here to chat about your next steps in tech.\n\nI saw you checked us out recently - what caught your eye about Crio? I'm here to chat about your next steps in tech and how Crio can help.\n\nI'd love to hear about your goals and see how our hands-on programs can fit in. We've got a free-trial workshop today that could be a cool way to kick things off. It's {Day}, so the workshop's tonight at **8:30 PM**, with an Ask-Me-Anything after.\n\nSo, scientific inquiry, what sparked your interest in that?\nuser: I'm currently working as a product manager, but I would like to understand a bit about\nassistant: Got it! You're a Product Manager looking to broaden your understanding. Makes total sense. What areas are you hoping to dive into specifically? Are you thinking more technical aspects, data analysis, or something else entirely?\n\nKnowing a bit more will help me point you in the right direction.\n\nAlso, since you're looking to learn more, the workshop tonight at 8:30 PM could be a great way to see how we break down complex topics in a really hands-on way. It's no pressure, just a chance to see if our style of learning clicks for you. Interested in joining?\n",
+    "timestamp": "2025-06-17T08:22:35.743Z"
+  }
+]

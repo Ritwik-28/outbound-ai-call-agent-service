@@ -1,0 +1,42 @@
+[
+  {
+    "role": "user",
+    "content": "What. Hi, how are you?  Hi wanted to know about Kyle.",
+    "timestamp": "2025-06-16T10:05:30.316Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Hey, hi there! Am I speaking with Kyle?\n\nAwesome to connect! I’m Ritwik from Crio Dot Do, here to chat about your next steps in tech.\n\nI saw you checked us out recently - what caught your eye? I’d love to hear about your goals and see how our hands-on programs can fit in. We’ve got a free-trial workshop today that could be a cool way to kick things off.\n\nSince it’s Friday, the workshop’s tonight at **8:30 PM**, with an Ask-Me-Anything after.\n\nSo, what sparked your interest in Crio? What are you hoping to achieve?\n",
+    "timestamp": "2025-06-16T10:05:33.042Z"
+  },
+  {
+    "role": "user",
+    "content": "Number two.  Get the job.",
+    "timestamp": "2025-06-16T10:06:17.262Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Got it. So your main goal is to land a job, right? What kind of job are you aiming for, and in what field? Knowing that will help me understand how Crio can best support you. What's your professional world like right now?\n",
+    "timestamp": "2025-06-16T10:06:18.685Z"
+  },
+  {
+    "role": "user",
+    "content": "Dr. Della point.",
+    "timestamp": "2025-06-16T10:06:43.071Z"
+  },
+  {
+    "role": "assistant",
+    "content": "I hear you. Are you referring to a specific project or concept related to Dr. Della? Could you elaborate a bit more on what you're interested in learning or achieving with that?\n\nKnowing more about your current role and the kind of job you're aiming for will help me tailor the information to your needs.\n",
+    "timestamp": "2025-06-16T10:06:44.576Z"
+  },
+  {
+    "role": "user",
+    "content": "I'm currently not working.",
+    "timestamp": "2025-06-16T10:07:14.868Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Okay, thanks for letting me know. Since you're currently not working and your goal is to land a job, Crio's hands-on approach could be a great fit. We focus on building a strong portfolio through real-world projects, which is exactly what employers look for.\n\nI see you're interested in the Full Stack Development program. What sparked that interest? Are you looking to build web applications, mobile apps, or something else entirely?\n",
+    "timestamp": "2025-06-16T10:07:16.583Z"
+  }
+]

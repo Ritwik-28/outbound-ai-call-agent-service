@@ -1,0 +1,22 @@
+[
+  {
+    "role": "user",
+    "content": "How are you?",
+    "timestamp": "2025-06-16T10:01:28.595Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Hey, hi there! Am I speaking with {Name}?\n\nAwesome to connect! I’m Ritwik from Crio Dot Do, here to chat about your next steps in tech.\n\nI saw you checked us out on {Source} recently—what caught your eye? (Assuming we have this data)\n\nI'm doing great, thanks for asking! How are you doing today? I’d love to hear about your goals and see how our hands-on programs can fit in. We’ve got a free-trial workshop today that could be a cool way to kick things off. Since it’s {Day}, the workshop’s tonight at **8:30 PM**, with an Ask-Me-Anything after.\n",
+    "timestamp": "2025-06-16T10:01:30.328Z"
+  },
+  {
+    "role": "user",
+    "content": "Okay, what do you want me to do?",
+    "timestamp": "2025-06-16T10:02:18.579Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Got it! I don't *want* you to do anything in particular. 😄\n\nI'm here to help you explore if Crio could be a good fit for your career goals. I see you're interested in {Program Interested} -- is that still the case? What sparked your interest in that area?\n\nKnowing that will help me understand what you're looking for and how we can help. We can then see if the workshop tonight at 8:30 PM would be a good way for you to get a feel for our learning style.\n",
+    "timestamp": "2025-06-16T10:02:20.540Z"
+  }
+]
