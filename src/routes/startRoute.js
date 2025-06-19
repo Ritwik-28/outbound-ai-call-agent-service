@@ -25,6 +25,10 @@ export default async function startRoute(fastify, options) {
     const from = request.body.From;
     const to = request.body.To;
 
+    // Latency logging: start time
+    const startTime = Date.now();
+    logger.verbose('start: request started', { callSid, timestamp: new Date().toISOString() });
+
     // Log the incoming request details for debugging
     logger.info('Headers', request.headers);
     logger.info('Body', request.body);
@@ -45,10 +49,14 @@ export default async function startRoute(fastify, options) {
         phoneNumber: from
       };
 
+      const initStart = Date.now();
       initializeConversation(callSid, metadata);
+      const initEnd = Date.now();
+      logger.verbose('start: conversation initialization finished', { callSid, latencyMs: initEnd - initStart });
 
       // Initialize Twilio VoiceResponse object to generate TwiML
       logger.debug('Creating new VoiceResponse object');
+      const twimlStart = Date.now();
       const twiml = new VoiceResponse();
 
       // Add initial greeting
@@ -65,6 +73,8 @@ export default async function startRoute(fastify, options) {
         speechTimeout: 'auto',
         bargeIn: true
       });
+      const twimlEnd = Date.now();
+      logger.verbose('start: TwiML generation finished', { callSid, latencyMs: twimlEnd - twimlStart });
 
       // Log the generated TwiML for debugging
       logger.info('Generated initial TwiML', {
@@ -74,6 +84,10 @@ export default async function startRoute(fastify, options) {
       // Set response content type to XML and send the TwiML
       reply.type('text/xml');
       reply.send(twiml.toString());
+
+      // Latency logging: end time
+      const endTime = Date.now();
+      logger.verbose('start: request finished', { callSid, totalLatencyMs: endTime - startTime });
     } catch (err) {
       // Log detailed error information for debugging
       logger.error('Failed to process /start route', {

@@ -29,6 +29,10 @@ export default async function processSpeechRoute(fastify, options) {
     const speech = request.body.SpeechResult || '';
     const isInterrupted = request.body.SpeechResult === 'interrupted';
 
+    // Latency logging: start time
+    const startTime = Date.now();
+    logger.verbose('process-speech: request started', { callSid, timestamp: new Date().toISOString() });
+
     // Log the incoming request details for debugging
     logger.info('Received speech processing request', {
       callSid,
@@ -96,13 +100,16 @@ export default async function processSpeechRoute(fastify, options) {
       }
 
       let textReply;
+      let aiStart, aiEnd, ttsStart, ttsEnd, fileStart, fileEnd, twimlStart, twimlEnd;
       if (objectionType) {
         textReply = 'I understand your concern. Let me provide more information or address your question.';
       } else {
-        // Generate an AI response using the Gemini service
-        logger.info('Generating AI reply');
+        aiStart = Date.now();
+        logger.verbose('process-speech: AI reply generation started', { callSid });
         const history = getConversation(callSid);
         textReply = await generateReply(speech, history);
+        aiEnd = Date.now();
+        logger.verbose('process-speech: AI reply generation finished', { callSid, latencyMs: aiEnd - aiStart });
       }
       // Save the user's speech and the AI's reply to the conversation history
       saveMessage(callSid, 'user', speech);
@@ -112,18 +119,25 @@ export default async function processSpeechRoute(fastify, options) {
       updateState(callSid, 'speaking');
 
       // Convert the AI response to speech using Deepgram
-      logger.info('Synthesizing speech');
+      ttsStart = Date.now();
+      logger.verbose('process-speech: TTS synthesis started', { callSid });
       const audioBuffer = await synthesizeSpeech(textReply);
+      ttsEnd = Date.now();
+      logger.verbose('process-speech: TTS synthesis finished', { callSid, latencyMs: ttsEnd - ttsStart });
       logger.debug('Generated audio buffer', { bufferSize: audioBuffer.length });
 
       // Save the audio to a file
+      fileStart = Date.now();
       const filename = `response-${Date.now()}.wav`;
       const filePath = path.join('public/audio', filename);
       logger.debug('Saving audio file', { filename, filePath });
       fs.writeFileSync(filePath, audioBuffer);
+      fileEnd = Date.now();
+      logger.verbose('process-speech: audio file write finished', { callSid, latencyMs: fileEnd - fileStart });
       logger.info('Audio file saved', { filename });
 
       // Create TwiML response to play the audio and gather next input
+      twimlStart = Date.now();
       const twiml = new VoiceResponse();
       const audioUrl = `${process.env.SERVER_HOST}/audio/${filename}`;
       logger.debug('Configuring TwiML to play audio', { audioUrl });
@@ -146,12 +160,18 @@ export default async function processSpeechRoute(fastify, options) {
         speechTimeout: 'auto',
         bargeIn: true
       });
+      twimlEnd = Date.now();
+      logger.verbose('process-speech: TwiML generation finished', { callSid, latencyMs: twimlEnd - twimlStart });
 
       logger.info('Generated TwiML response', { twiml: twiml.toString() });
 
       // Set response content type to XML and send the TwiML
       reply.type('text/xml');
       reply.send(twiml.toString());
+
+      // Latency logging: end time
+      const endTime = Date.now();
+      logger.verbose('process-speech: request finished', { callSid, totalLatencyMs: endTime - startTime });
     } catch (err) {
       // Log detailed error information for debugging
       logger.error('Failed to process speech', {

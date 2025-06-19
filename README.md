@@ -107,4 +107,4 @@ The system includes comprehensive error handling:
 - Detailed logging for debugging
 
 ## License
-MIT
+This project is licensed under the [MIT License](LICENSE).
